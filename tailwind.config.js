@@ -34,6 +34,9 @@ export default {
           300: "#EDEDED",
         },
       },
+      fontFamily: {
+        nunitoSans: ["Nunito Sans", "sans-serif"],
+      },
     },
   },
   plugins: [animatePlugin],
