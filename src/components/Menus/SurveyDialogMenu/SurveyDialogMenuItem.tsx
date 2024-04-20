@@ -18,7 +18,6 @@ export interface SurveyDialogMenuItemProps
     VariantProps<typeof menuVariants> {
   icon: React.ReactNode;
   title: string;
-  type: "danger" | "primary";
 }
 
 const SurveyDialogMenuItem = ({

@@ -6,12 +6,14 @@ import { CheckListIcon } from "../Icons";
 
 const ProgressBar = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ className, value, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & {
+    containerClassName: string;
+  }
+>(({ className, value, containerClassName, ...props }, ref) => {
   const isFullProgress = value === 100;
 
   return (
-    <div className="flex items-center gap-3">
+    <div className={cn("flex items-center gap-3", containerClassName)}>
       <ProgressPrimitive.Root
         ref={ref}
         className={cn(

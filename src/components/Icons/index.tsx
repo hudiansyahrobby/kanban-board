@@ -7,6 +7,7 @@ import ExclamationIcon from "@/assets/icons/exclamation-icon.svg?react";
 import PlusCircleIcon from "@/assets/icons/plus-circle-icon.svg?react";
 import TrashIcon from "@/assets/icons/trash-icon.svg?react";
 import PlusIcon from "@/assets/icons/plus-icon.svg?react";
+import EditIcon from "@/assets/icons/edit-icon.svg?react";
 
 export {
   CloseIcon,
@@ -18,4 +19,5 @@ export {
   PlusCircleIcon,
   TrashIcon,
   PlusIcon,
+  EditIcon,
 };

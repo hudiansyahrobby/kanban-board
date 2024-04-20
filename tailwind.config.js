@@ -32,6 +32,8 @@ export default {
           100: "#E0E0E0",
           200: "#333333",
           300: "#EDEDED",
+          400: "#FAFAFA",
+          500: "#757575",
         },
       },
       fontFamily: {
