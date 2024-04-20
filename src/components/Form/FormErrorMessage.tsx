@@ -8,7 +8,7 @@ const FormErrorMessage = forwardRef<
 >(({ children, className, ...props }, ref) => {
   return (
     <p
-      className={cn("text-danger text-[10px] leading-5 font-bold", className)}
+      className={cn("text-danger text-xs leading-5", className)}
       ref={ref}
       {...props}
     >

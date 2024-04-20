@@ -10,7 +10,7 @@ const TextAreaInput = React.forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     return (
       <textarea
         className={cn(
-          "border-2 min-h-[88px] w-full resize-none border-black-300 py-2 px-4 rounded-lg disabled:cursor-not-allowed disabled:opacity-50",
+          "border-2 min-h-[88px] w-full resize-none border-black-300 py-2 px-4 text-sm rounded-lg disabled:cursor-not-allowed disabled:opacity-50",
           props.value
             ? "focus-visible:outline-primary-100"
             : "focus-visible:outline-primary-100/20",

@@ -10,7 +10,7 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         className={cn(
-          "border-2 h-9 border-black-300 py-2 px-4 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 text-xs",
+          "border-2 h-9 border-black-300 py-2 px-4 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 text-sm",
           props.value
             ? "focus-visible:outline-primary-100"
             : "focus-visible:outline-primary-100/20",
