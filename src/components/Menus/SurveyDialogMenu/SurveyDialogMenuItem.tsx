@@ -1,5 +1,6 @@
 import { cn } from "@/libs/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
 
 const menuVariants = cva("text-black-200", {
   variants: {
@@ -20,15 +21,13 @@ export interface SurveyDialogMenuItemProps
   title: string;
 }
 
-const SurveyDialogMenuItem = ({
-  className,
-  icon,
-  title,
-  variant,
-  ...props
-}: SurveyDialogMenuItemProps) => (
+const SurveyDialogMenuItem = React.forwardRef<
+  HTMLDivElement,
+  SurveyDialogMenuItemProps
+>(({ className, icon, title, variant, ...props }, ref) => (
   <div
     className={cn("flex items-center gap-3 group cursor-pointer", className)}
+    ref={ref}
     {...props}
   >
     <div className={menuVariants({ variant })}>{icon}</div>
@@ -42,7 +41,7 @@ const SurveyDialogMenuItem = ({
       {title}
     </span>
   </div>
-);
+));
 
 SurveyDialogMenuItem.displayName = "SurveyDialogMenuItem";
 

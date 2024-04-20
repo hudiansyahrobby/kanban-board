@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/libs/utils";
 import Badge from "@/components/Badge";
 import TaskCard from "./components/TaskCard";
-import { PlusCircleIcon } from "@/components/Icons";
+import TaskDialog from "../Dialogs/TaskDialog";
 
 const groupTaskCardVariants = cva("p-4 border rounded-[4px]", {
   variants: {
@@ -58,11 +58,7 @@ const GroupTaskCard = ({
         progress={30}
       />
 
-      <div className="cursor-pointer flex items-center gap-1">
-        <PlusCircleIcon />
-
-        <span className="text-xs text-black">New Task</span>
-      </div>
+      <TaskDialog />
     </div>
   );
 };

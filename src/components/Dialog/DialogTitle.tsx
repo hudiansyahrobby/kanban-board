@@ -7,7 +7,7 @@ const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
-  <div className="flex justify-between items-center gap-3">
+  <div className="flex justify-between items-center gap-3 mb-3">
     <DialogPrimitive.Title
       ref={ref}
       className={cn("text-black font-bold text-lg", className)}
@@ -20,6 +20,7 @@ const DialogTitle = React.forwardRef<
     </DialogPrimitive.Close>
   </div>
 ));
+
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
 export default DialogTitle;

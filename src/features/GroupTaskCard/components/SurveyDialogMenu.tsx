@@ -1,10 +1,6 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  EditIcon,
-  TrashIcon,
-} from "@/components/Icons";
+import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/components/Icons";
 import SurveyDialogMenuItem from "@/components/Menus/SurveyDialogMenu/SurveyDialogMenuItem";
+import TaskDialog from "@/features/Dialogs/TaskDialog";
 
 const SurveyDialogMenu = () => {
   return (
@@ -21,11 +17,7 @@ const SurveyDialogMenu = () => {
         variant="primary"
       />
 
-      <SurveyDialogMenuItem
-        title="Edit"
-        icon={<EditIcon />}
-        variant="primary"
-      />
+      <TaskDialog isEdit />
 
       <SurveyDialogMenuItem
         title="Delete"
