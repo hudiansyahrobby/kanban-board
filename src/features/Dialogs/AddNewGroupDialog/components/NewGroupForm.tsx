@@ -84,7 +84,11 @@ const NewGroupForm = () => {
           </Button>
         </DialogClose>
 
-        <Button type="submit" disabled={!isValid || !isDirty || isPending}>
+        <Button
+          type="submit"
+          disabled={!isValid || !isDirty || isPending}
+          isLoading={isPending}
+        >
           Submit
         </Button>
       </DialogFooter>
