@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/components/Icons";
 import SurveyDialogMenuItem from "@/components/Menus/SurveyDialogMenu/SurveyDialogMenuItem";
+import DeleteTaskDialog from "@/features/Dialogs/DeleteTaskDialog";
 import TaskDialog from "@/features/Dialogs/TaskDialog";
 
 const SurveyDialogMenu = () => {
@@ -19,11 +20,7 @@ const SurveyDialogMenu = () => {
 
       <TaskDialog isEdit />
 
-      <SurveyDialogMenuItem
-        title="Delete"
-        icon={<TrashIcon />}
-        variant="danger"
-      />
+      <DeleteTaskDialog />
     </div>
   );
 };
