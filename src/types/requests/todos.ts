@@ -1,5 +1,6 @@
 export type TCreateTodoReq = {
   title: string;
+  description: string;
 };
 
 export type TCreateTodoItemReq = {

@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
@@ -7,15 +6,16 @@ import FormErrorMessage from "@/components/Form/FormErrorMessage";
 import FormLabel from "@/components/Form/FormLabel";
 import TextAreaInput from "@/components/Inputs/TextAreaInput";
 import TextInput from "@/components/Inputs/TextInput";
+import { useCreateTodo } from "@/services/todos";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { INewGroupInput, newGroupValidation } from "../config";
 
-interface NewGroupFormProps {}
-
-const NewGroupForm: React.FC<NewGroupFormProps> = () => {
+const NewGroupForm = () => {
   const {
     control,
     formState: { isValid, isDirty, errors },
+    handleSubmit,
   } = useForm<INewGroupInput>({
     resolver: zodResolver(newGroupValidation),
     mode: "onChange",
@@ -25,9 +25,27 @@ const NewGroupForm: React.FC<NewGroupFormProps> = () => {
     },
   });
 
-  console.log(errors);
+  const { mutate, isPending } = useCreateTodo();
+
+  const onSubmit = handleSubmit(({ title, description }) => {
+    mutate(
+      {
+        title,
+        description,
+      },
+      {
+        onSuccess: () => {
+          toast.success("New Todo has been created successfully");
+        },
+        onError: () => {
+          toast.error("Failed creating new todo");
+        },
+      }
+    );
+  });
+
   return (
-    <form className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2" onSubmit={onSubmit}>
       <Controller
         control={control}
         name="title"
@@ -66,7 +84,7 @@ const NewGroupForm: React.FC<NewGroupFormProps> = () => {
           </Button>
         </DialogClose>
 
-        <Button type="submit" disabled={!isValid || !isDirty}>
+        <Button type="submit" disabled={!isValid || !isDirty || isPending}>
           Submit
         </Button>
       </DialogFooter>
