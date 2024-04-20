@@ -34,7 +34,7 @@ const ProgressBar = React.forwardRef<
       {isFullProgress ? (
         <CheckListIcon className="text-success size-4" />
       ) : (
-        <span>{`${value}%`}</span>
+        <span className="text-xs text-black-500">{`${value}%`}</span>
       )}
     </div>
   );

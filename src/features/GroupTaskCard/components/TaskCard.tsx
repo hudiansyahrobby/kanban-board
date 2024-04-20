@@ -1,14 +1,14 @@
-import ProgressBar from "@/components/ProgressBar";
-import { cn } from "@/libs/utils";
 import React from "react";
-import SettingSurveyDialogMenu from "./components/SettingSurveyDialogMenu";
+import ProgressBar from "@/components/ProgressBar";
+import SettingSurveyDialogMenu from "@/features/GroupTaskCard/components/SettingSurveyDialogMenu";
+import { cn } from "@/libs/utils";
 
 interface TaskCardProps {
   title: string;
   progress: number;
   id: number;
-  className: string;
-  isEmpty: boolean;
+  className?: string;
+  isEmpty?: boolean;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({

@@ -1,7 +1,9 @@
+import React from "react";
+
 import { ThreeDotsHorizontalIcon } from "@/components/Icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/Popover";
-import SurveyDialogMenu from "@/features/TaskCard/components/SurveyDialogMenu";
-import React from "react";
+
+import SurveyDialogMenu from "@/features/GroupTaskCard/components/SurveyDialogMenu";
 
 interface SettingSurveyDialogMenuProps {}
 
