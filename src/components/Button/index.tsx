@@ -2,6 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/libs/utils";
+import { LoadingIcon } from "@/components/Icons";
 
 const buttonVariants = cva(
   "inline-flex items-center tracking-wide justify-center whitespace-nowrap rounded-lg text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 px-4 py-1.5",
@@ -24,11 +25,22 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  isLoading?: boolean;
+}
 
-function Button({ className, variant, ...props }: ButtonProps) {
+function Button({
+  className,
+  isLoading,
+  children,
+  variant,
+  ...props
+}: ButtonProps) {
   return (
-    <button className={cn(buttonVariants({ variant }), className)} {...props} />
+    <button className={cn(buttonVariants({ variant }), className)} {...props}>
+      {children}
+      {isLoading && <LoadingIcon className="size-3 animate-spin ml-1.5" />}
+    </button>
   );
 }
 
