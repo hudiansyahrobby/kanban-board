@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/components/Icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/components/Icons";
 import SurveyDialogMenuItem from "@/components/Menus/SurveyDialogMenu/SurveyDialogMenuItem";
 import DeleteTaskDialog from "@/features/Dialogs/DeleteTaskDialog";
 import TaskDialog from "@/features/Dialogs/TaskDialog";
