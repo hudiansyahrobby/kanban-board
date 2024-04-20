@@ -1,15 +1,4 @@
-import Button from "./components/Button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./components/Dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "./components/Popover";
-import ProgressBar from "./components/ProgressBar";
 
 function App() {
   return (
