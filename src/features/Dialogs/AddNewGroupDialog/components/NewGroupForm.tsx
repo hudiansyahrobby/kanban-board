@@ -10,6 +10,8 @@ import { useCreateTodo } from "@/services/todos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { INewGroupInput, newGroupValidation } from "../config";
+import { useQueryClient } from "@tanstack/react-query";
+import { ENDPOINT } from "@/constants/endpoint";
 
 interface NewGroupProps {
   onSuccess: () => void;
@@ -31,6 +33,8 @@ const NewGroupForm = ({ onSuccess }: NewGroupProps) => {
 
   const { mutate, isPending } = useCreateTodo();
 
+  const queryClient = useQueryClient();
+
   const onSubmit = handleSubmit(({ title, description }) => {
     mutate(
       {
@@ -38,9 +42,12 @@ const NewGroupForm = ({ onSuccess }: NewGroupProps) => {
         description,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           toast.success("New Todo has been created successfully");
           onSuccess?.();
+          await queryClient.invalidateQueries({
+            queryKey: [ENDPOINT.TODOS],
+          });
         },
         onError: () => {
           toast.error("Failed creating new todo");
