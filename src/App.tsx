@@ -25,20 +25,24 @@ function App() {
     },
     []
   );
+
   return (
     <div>
       <ProductRoadmapHeader title="Product Roadmap" />
       <div className="flex gap-2 max-w-[1352px] mx-auto py-6 overflow-x-auto">
         {isPending ? (
           <LoadingIcon className="mx-auto animate-spin text-primary" />
-        ) : (
+        ) : data && data?.length > 0 ? (
           data?.map((item, idx) => (
             <GroupTaskCard
               description={item.description}
               title={item.title}
               variant={getVariant(idx)}
+              todoId={item.id}
             />
           ))
+        ) : (
+          <h2 className="text-center mx-auto">There is no group task</h2>
         )}
       </div>
     </div>
