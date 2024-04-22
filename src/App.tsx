@@ -35,6 +35,7 @@ function App() {
         ) : data && data?.length > 0 ? (
           data?.map((item, idx) => (
             <GroupTaskCard
+              key={item.id}
               description={item.description}
               title={item.title}
               variant={getVariant(idx)}
