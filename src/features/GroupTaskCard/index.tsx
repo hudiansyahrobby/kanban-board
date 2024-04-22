@@ -22,14 +22,14 @@ const groupTaskCardVariants = cva("p-4 border rounded-[4px]", {
 export interface GroupTaskCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof groupTaskCardVariants> {
-  period: string;
+  description: string;
   title: string;
 }
 
 const GroupTaskCard = ({
   className,
   variant,
-  period,
+  description,
   title,
   ...props
 }: GroupTaskCardProps) => {
@@ -44,7 +44,9 @@ const GroupTaskCard = ({
     >
       <Badge variant={variant}>{title}</Badge>
 
-      <h2 className="font-bold text-xs leading-5 text-black-50">{period}</h2>
+      <h2 className="font-bold text-xs leading-5 text-black-50">
+        {description}
+      </h2>
 
       <TaskCard
         id={1}

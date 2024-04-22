@@ -12,8 +12,8 @@ import { AxiosResponse } from "axios";
 export const useListTodos = () => {
   return useQuery({
     queryKey: [ENDPOINT.TODOS],
-    queryFn: () => API.get<AxiosResponse<TTodo[]>>(ENDPOINT.TODOS),
-    select: (data) => data.data?.data,
+    queryFn: () => API.get<TTodo[]>(ENDPOINT.TODOS),
+    select: (data) => data.data,
   });
 };
 
