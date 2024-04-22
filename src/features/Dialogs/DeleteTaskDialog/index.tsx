@@ -11,14 +11,49 @@ import {
 } from "@/components/Dialog";
 import { ExclamationIcon, TrashIcon } from "@/components/Icons";
 import SurveyDialogMenuItem from "@/components/Menus/SurveyDialogMenu/SurveyDialogMenuItem";
-import React from "react";
+import { ENDPOINT } from "@/constants/endpoint";
+import { useTodo } from "@/contexts/TodoContext";
+import { useDeleteTodoItem } from "@/services/todos";
+import { useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 interface DeleteTaskDialogProps {}
 
 const DeleteTaskDialog: React.FC<DeleteTaskDialogProps> = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const {
+    todo: { todoItemId, todoId },
+    clearTodo,
+  } = useTodo();
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useDeleteTodoItem();
+
+  const handleDelete = () => {
+    mutate(
+      {
+        todoId: todoId!,
+        todoItemId: todoItemId!,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Todo item has been deleted successfully");
+          setIsOpen(false);
+          queryClient.invalidateQueries({
+            queryKey: [`${ENDPOINT.TODOS}/${todoId}/items`],
+          });
+          clearTodo();
+        },
+        onError: () => {
+          toast.error("Failed deleting todo item");
+        },
+      }
+    );
+  };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild onClick={() => setIsOpen(true)}>
         <SurveyDialogMenuItem
           title="Delete"
           icon={<TrashIcon />}
@@ -41,7 +76,13 @@ const DeleteTaskDialog: React.FC<DeleteTaskDialogProps> = () => {
               </Button>
             </DialogClose>
 
-            <Button type="button" variant="danger">
+            <Button
+              onClick={handleDelete}
+              type="button"
+              variant="danger"
+              isLoading={isPending}
+              disabled={isPending}
+            >
               Delete
             </Button>
           </DialogFooter>

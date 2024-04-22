@@ -53,9 +53,15 @@ export const useUpdateTodoItem = (todoId: number, todoItemId: number) => {
   });
 };
 
-export const useDeleteTodoItem = (todoId: number, todoItemId: number) => {
+export const useDeleteTodoItem = () => {
   return useMutation({
-    mutationFn: () => {
+    mutationFn: ({
+      todoId,
+      todoItemId,
+    }: {
+      todoId: number;
+      todoItemId: number;
+    }) => {
       return API.delete<null>(
         `${ENDPOINT.TODOS}/${todoId}/items/${todoItemId}`
       );
