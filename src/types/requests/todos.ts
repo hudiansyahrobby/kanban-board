@@ -10,6 +10,6 @@ export type TCreateTodoItemReq = {
 
 export type TUpdateTodoItemReq = {
   target_todo_id: number;
-  name: string;
-  progress_percentage: number;
+  name?: string;
+  progress_percentage?: number;
 };
