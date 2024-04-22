@@ -4,9 +4,9 @@ import SettingSurveyDialogMenu from "@/features/GroupTaskCard/components/Setting
 import { cn } from "@/libs/utils";
 
 interface TaskCardProps {
-  title: string;
-  progress: number;
-  id: number;
+  title?: string;
+  progress?: number;
+  id?: number;
   className?: string;
   isEmpty?: boolean;
 }
@@ -20,7 +20,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
   return (
     <div
       className={cn(
-        "border border-black-100 rounded-[4px] p-4 bg-black-400 w-[298px]",
+        "border border-black-100 rounded-[4px] bg-black-400 w-[298px]",
+        isEmpty ? "py-2 px-4" : "p-4",
         className
       )}
     >

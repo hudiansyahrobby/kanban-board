@@ -31,6 +31,7 @@ export const useListTodoItems = (id: number) => {
     queryFn: () =>
       API.get<AxiosResponse<TTodoItem[]>>(`${ENDPOINT.TODOS}/${id}/items`),
     select: (data) => data.data?.data,
+    enabled: !!id,
   });
 };
 

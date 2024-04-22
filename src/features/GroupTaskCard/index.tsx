@@ -4,6 +4,8 @@ import { cn } from "@/libs/utils";
 import Badge from "@/components/Badge";
 import TaskCard from "./components/TaskCard";
 import TaskDialog from "../Dialogs/TaskDialog";
+import { useListTodoItems } from "@/services/todos";
+import { LoadingIcon } from "@/components/Icons";
 
 const groupTaskCardVariants = cva("p-4 border rounded-[4px]", {
   variants: {
@@ -24,6 +26,7 @@ export interface GroupTaskCardProps
     VariantProps<typeof groupTaskCardVariants> {
   description: string;
   title: string;
+  todoId: number;
 }
 
 const GroupTaskCard = ({
@@ -31,13 +34,16 @@ const GroupTaskCard = ({
   variant,
   description,
   title,
+  todoId,
   ...props
 }: GroupTaskCardProps) => {
+  const { data, isFetching } = useListTodoItems(todoId);
+
   return (
     <div
       className={cn(
         groupTaskCardVariants({ variant }),
-        "flex flex-col gap-3 items-start",
+        "flex flex-col gap-3 items-start w-[332px] shrink-0 grow-0",
         className
       )}
       {...props}
@@ -48,17 +54,19 @@ const GroupTaskCard = ({
         {description}
       </h2>
 
-      <TaskCard
-        id={1}
-        title="Re-designed the zero-g doggie bags. No more spills!"
-        progress={100}
-      />
-
-      <TaskCard
-        id={2}
-        title="Bundle interplanetary analytics for improved transmission"
-        progress={30}
-      />
+      {isFetching ? (
+        <LoadingIcon className="animate-spin text-primary mx-auto" />
+      ) : data && data?.length > 0 ? (
+        data?.map((item) => (
+          <TaskCard
+            id={item.id}
+            title={item.name}
+            progress={item.progress_percentage || 0}
+          />
+        ))
+      ) : (
+        <TaskCard isEmpty />
+      )}
 
       <TaskDialog />
     </div>
