@@ -5,7 +5,14 @@ import App from "./App.tsx";
 import "./index.css";
 import { Toaster } from "sonner";
 import { TodoProvider } from "./contexts/TodoContext.tsx";
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
