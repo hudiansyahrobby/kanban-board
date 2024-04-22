@@ -1,45 +1,44 @@
 import React, { createContext, useContext, useState } from "react";
 
-type TTodoContext = {
+type TTodo = {
   todoId: number | null;
   todoItemId: number | null;
-  setTodoId: (todoId: number | null) => void;
-  setTodoItemId: (todoId: number | null) => void;
+  name: string;
+  progress: number | null;
+};
+
+type TTodoContext = {
+  todo: TTodo;
+  setTodo: React.Dispatch<React.SetStateAction<TTodo>>;
+  clearTodo: () => void;
 };
 
 const TodoContext = createContext<TTodoContext>({} as TTodoContext);
 
-const initialState: TTodoContext = {
+const initialState: TTodo = {
   todoId: null,
   todoItemId: null,
-  setTodoId: () => {},
-  setTodoItemId: () => {},
+  name: "",
+  progress: null,
 };
 
 export function TodoProvider({ children }: { children: React.ReactNode }) {
   const [todo, setTodo] = useState(initialState);
 
-  const setTodoId = (todoId: number | null) => {
+  const clearTodo = () => {
     setTodo({
-      ...todo,
-      todoId,
+      todoId: null,
+      todoItemId: null,
+      name: "",
+      progress: null,
     });
   };
-
-  const setTodoItemId = (todoItemId: number | null) => {
-    setTodo({
-      ...todo,
-      todoItemId,
-    });
-  };
-
   return (
     <TodoContext.Provider
       value={{
-        todoId: todo.todoId,
-        todoItemId: todo.todoId,
-        setTodoId,
-        setTodoItemId,
+        todo,
+        setTodo,
+        clearTodo,
       }}
     >
       {children}

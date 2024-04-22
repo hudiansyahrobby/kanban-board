@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const taskValidation = z.object({
   name: z.string().min(1, "Field name is required"),
-  progress: z
+  progress_percentage: z
     .string()
     .refine((val) => val, {
       message: "Field progress is required",

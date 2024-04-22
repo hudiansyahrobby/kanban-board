@@ -28,9 +28,8 @@ export const useCreateTodo = () => {
 export const useListTodoItems = (id: number) => {
   return useQuery({
     queryKey: [`${ENDPOINT.TODOS}/${id}/items`],
-    queryFn: () =>
-      API.get<AxiosResponse<TTodoItem[]>>(`${ENDPOINT.TODOS}/${id}/items`),
-    select: (data) => data.data?.data,
+    queryFn: () => API.get<TTodoItem[]>(`${ENDPOINT.TODOS}/${id}/items`),
+    select: (data) => data.data,
     enabled: !!id,
   });
 };
@@ -38,10 +37,7 @@ export const useListTodoItems = (id: number) => {
 export const useCreateTodoItem = (todoId: number) => {
   return useMutation({
     mutationFn: (newTodoItem: TCreateTodoItemReq) => {
-      return API.post<AxiosResponse<TTodo>>(
-        `${ENDPOINT.TODOS}/${todoId}/items`,
-        newTodoItem
-      );
+      return API.post<TTodo>(`${ENDPOINT.TODOS}/${todoId}/items`, newTodoItem);
     },
   });
 };
@@ -49,7 +45,7 @@ export const useCreateTodoItem = (todoId: number) => {
 export const useUpdateTodoItem = (todoId: number, todoItemId: number) => {
   return useMutation({
     mutationFn: (todoItem: TUpdateTodoItemReq) => {
-      return API.patch<AxiosResponse<TTodo>>(
+      return API.patch<TTodo>(
         `${ENDPOINT.TODOS}/${todoId}/items/${todoItemId}`,
         todoItem
       );
@@ -60,7 +56,7 @@ export const useUpdateTodoItem = (todoId: number, todoItemId: number) => {
 export const useDeleteTodoItem = (todoId: number, todoItemId: number) => {
   return useMutation({
     mutationFn: () => {
-      return API.delete<AxiosResponse<null>>(
+      return API.delete<null>(
         `${ENDPOINT.TODOS}/${todoId}/items/${todoItemId}`
       );
     },

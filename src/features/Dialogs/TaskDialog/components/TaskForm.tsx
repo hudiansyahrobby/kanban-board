@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
@@ -9,25 +9,102 @@ import TextInput from "@/components/Inputs/TextInput";
 import { formatPercentage } from "@/libs/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ITaskInput, taskValidation } from "../config";
+import { useCreateTodoItem, useUpdateTodoItem } from "@/services/todos";
+import { toast } from "sonner";
+import { useTodo } from "@/contexts/TodoContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { ENDPOINT } from "@/constants/endpoint";
 
-interface TaskFormProps {}
+interface TaskFormProps {
+  isEdit?: boolean;
+  onSuccess: () => void;
+}
 
-const TaskForm: React.FC<TaskFormProps> = () => {
+const TaskForm: React.FC<TaskFormProps> = ({ isEdit, onSuccess }) => {
+  const {
+    todo: { todoId, todoItemId, name, progress },
+    clearTodo,
+  } = useTodo();
+  const queryClient = useQueryClient();
+
   const {
     control,
     formState: { isValid, isDirty, errors },
+    handleSubmit,
+    reset,
   } = useForm<ITaskInput>({
     resolver: zodResolver(taskValidation),
     mode: "onChange",
     defaultValues: {
       name: "",
-      progress: "",
+      progress_percentage: "",
     },
   });
 
-  console.log(errors);
+  useEffect(() => {
+    if (isEdit) {
+      reset({
+        name,
+        progress_percentage: progress
+          ? `${formatPercentage(progress.toString())}`
+          : "",
+      });
+    }
+  }, [name, progress, isEdit, reset]);
+
+  const { mutate: createTodoItem, isPending: isCreateTodoItemLoading } =
+    useCreateTodoItem(todoId!);
+
+  const { mutate: updateTodoItem, isPending: isUpdateTodoItemLoading } =
+    useUpdateTodoItem(todoId!, todoItemId!);
+
+  const onSubmit = handleSubmit(({ name, progress_percentage }) => {
+    if (isEdit) {
+      updateTodoItem(
+        {
+          name,
+          progress_percentage: Number(progress_percentage.replace("%", "")),
+          target_todo_id: todoId!,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Todo item has been updated successfully");
+            onSuccess();
+            queryClient.invalidateQueries({
+              queryKey: [`${ENDPOINT.TODOS}/${todoId}/items`],
+            });
+            clearTodo();
+          },
+          onError: () => {
+            toast.error("Failed updating todo item");
+          },
+        }
+      );
+    } else {
+      createTodoItem(
+        {
+          name,
+          progress_percentage: Number(progress_percentage.replace("%", "")),
+        },
+        {
+          onSuccess: async () => {
+            toast.success("New todo item has been created successfully");
+            onSuccess();
+            queryClient.invalidateQueries({
+              queryKey: [`${ENDPOINT.TODOS}/${todoId}/items`],
+            });
+            clearTodo();
+          },
+          onError: () => {
+            toast.error("Failed creating new todo item");
+          },
+        }
+      );
+    }
+  });
+
   return (
-    <form className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2" onSubmit={onSubmit}>
       <Controller
         control={control}
         name="name"
@@ -44,7 +121,7 @@ const TaskForm: React.FC<TaskFormProps> = () => {
 
       <Controller
         control={control}
-        name="progress"
+        name="progress_percentage"
         render={({ field }) => {
           return (
             <div className="flex flex-col gap-2">
@@ -62,7 +139,9 @@ const TaskForm: React.FC<TaskFormProps> = () => {
                   }
                 }}
               />
-              <FormErrorMessage>{errors?.progress?.message}</FormErrorMessage>
+              <FormErrorMessage>
+                {errors?.progress_percentage?.message}
+              </FormErrorMessage>
             </div>
           );
         }}
@@ -75,7 +154,16 @@ const TaskForm: React.FC<TaskFormProps> = () => {
           </Button>
         </DialogClose>
 
-        <Button type="submit" disabled={!isValid || !isDirty}>
+        <Button
+          type="submit"
+          disabled={
+            !isValid ||
+            !isDirty ||
+            isCreateTodoItemLoading ||
+            isUpdateTodoItemLoading
+          }
+          isLoading={isCreateTodoItemLoading || isUpdateTodoItemLoading}
+        >
           Save Task
         </Button>
       </DialogFooter>

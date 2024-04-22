@@ -2,11 +2,13 @@ import React from "react";
 import ProgressBar from "@/components/ProgressBar";
 import SettingSurveyDialogMenu from "@/features/GroupTaskCard/components/SettingSurveyDialogMenu";
 import { cn } from "@/libs/utils";
+import { useTodo } from "@/contexts/TodoContext";
 
 interface TaskCardProps {
   title?: string;
   progress?: number;
-  id?: number;
+  todoItemId?: number;
+  todoId?: number;
   className?: string;
   isEmpty?: boolean;
 }
@@ -16,7 +18,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
   title,
   className,
   isEmpty,
+  todoItemId,
+  todoId,
 }) => {
+  const { setTodo } = useTodo();
   return (
     <div
       className={cn(
@@ -39,7 +44,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
               containerClassName="grow-0 shrink-0 basis-[216px]"
             />
 
-            <SettingSurveyDialogMenu />
+            <SettingSurveyDialogMenu
+              handleClick={() => {
+                setTodo({
+                  todoId: todoId!,
+                  todoItemId: todoItemId!,
+                  name: title || "",
+                  progress: progress || null,
+                });
+              }}
+            />
           </div>
         </>
       )}

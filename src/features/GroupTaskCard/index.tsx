@@ -6,6 +6,7 @@ import TaskCard from "./components/TaskCard";
 import TaskDialog from "../Dialogs/TaskDialog";
 import { useListTodoItems } from "@/services/todos";
 import { LoadingIcon } from "@/components/Icons";
+import { useTodo } from "@/contexts/TodoContext";
 
 const groupTaskCardVariants = cva("p-4 border rounded-[4px]", {
   variants: {
@@ -39,6 +40,8 @@ const GroupTaskCard = ({
 }: GroupTaskCardProps) => {
   const { data, isFetching } = useListTodoItems(todoId);
 
+  const { todo, setTodo } = useTodo();
+
   return (
     <div
       className={cn(
@@ -59,16 +62,25 @@ const GroupTaskCard = ({
       ) : data && data?.length > 0 ? (
         data?.map((item) => (
           <TaskCard
-            id={item.id}
+            key={item.id}
+            todoItemId={item.id}
             title={item.name}
             progress={item.progress_percentage || 0}
+            todoId={todoId}
           />
         ))
       ) : (
         <TaskCard isEmpty />
       )}
 
-      <TaskDialog />
+      <TaskDialog
+        handleClick={() =>
+          setTodo({
+            ...todo,
+            todoId,
+          })
+        }
+      />
     </div>
   );
 };
