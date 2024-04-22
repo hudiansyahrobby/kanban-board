@@ -11,7 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { INewGroupInput, newGroupValidation } from "../config";
 
-const NewGroupForm = () => {
+interface NewGroupProps {
+  onSuccess: () => void;
+}
+
+const NewGroupForm = ({ onSuccess }: NewGroupProps) => {
   const {
     control,
     formState: { isValid, isDirty, errors },
@@ -36,6 +40,7 @@ const NewGroupForm = () => {
       {
         onSuccess: () => {
           toast.success("New Todo has been created successfully");
+          onSuccess?.();
         },
         onError: () => {
           toast.error("Failed creating new todo");
