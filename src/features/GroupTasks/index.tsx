@@ -1,4 +1,10 @@
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
@@ -16,6 +22,14 @@ const GroupTasks = () => {
   const { data, isPending } = useListTodos();
 
   const { mutate } = useUpdateTodoItem();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
   const getVariant = useCallback(
     (index: number): GroupTaskCardProps["variant"] => {
@@ -77,7 +91,7 @@ const GroupTasks = () => {
       {isPending ? (
         <LoadingIcon className="mx-auto animate-spin text-primary" />
       ) : data && data?.length > 0 ? (
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
           {data.map((item, idx) => {
             return (
               <GroupTaskCard
