@@ -87,7 +87,7 @@ const GroupTasks = () => {
   };
 
   return (
-    <div className="flex gap-3 max-w-[1352px] mx-auto py-6 overflow-x-auto">
+    <div className="flex p-4 gap-3 max-w-[1352px] mx-auto py-6 overflow-x-auto 2xl:px-0">
       {isPending ? (
         <LoadingIcon className="mx-auto animate-spin text-primary" />
       ) : data && data?.length > 0 ? (
