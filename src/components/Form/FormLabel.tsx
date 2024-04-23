@@ -8,7 +8,10 @@ const FormLabel = forwardRef<
 >(({ children, className, ...props }, ref) => {
   return (
     <label
-      className={cn("text-black-50 text-xs leading-5 font-bold", className)}
+      className={cn(
+        "text-black-50 text-left text-xs leading-5 font-bold",
+        className
+      )}
       ref={ref}
       {...props}
     >
