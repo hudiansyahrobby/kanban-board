@@ -9,10 +9,12 @@ const ProductRoadmapHeader: React.FC<ProductRoadmapHeaderProps> = ({
   title,
 }) => {
   return (
-    <div className="flex items-center gap-4 p-4 border-b border-black-100">
-      <h2 className="font-bold text-lg font-nunitoSans ">{title}</h2>
+    <div className="p-4 border-b border-black-100">
+      <div className="flex items-center gap-4 max-w-[1352px] mx-auto">
+        <h2 className="font-bold text-lg font-nunitoSans ">{title}</h2>
 
-      <AddNewGroupDialog />
+        <AddNewGroupDialog />
+      </div>
     </div>
   );
 };
