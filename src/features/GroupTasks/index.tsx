@@ -40,8 +40,8 @@ const GroupTasks = () => {
 
   const handleDragEnd = (e: DragEndEvent) => {
     const todoIdAndItemId = (e.active?.id as string).split("-");
-    const currentTodoId = todoIdAndItemId[0];
-    const currentTodoItemId = todoIdAndItemId[1];
+    const currentTodoId = Number(todoIdAndItemId[0]);
+    const currentTodoItemId = Number(todoIdAndItemId[1]);
 
     if (!e.over || e.over.id === currentTodoId) {
       return;
@@ -52,8 +52,8 @@ const GroupTasks = () => {
     mutate(
       {
         target_todo_id: targetTodoId!,
-        todoId: Number(currentTodoId),
-        todoItemId: Number(currentTodoItemId),
+        todoId: currentTodoId,
+        todoItemId: currentTodoItemId,
       },
       {
         onSuccess: () => {
@@ -73,7 +73,7 @@ const GroupTasks = () => {
   };
 
   return (
-    <div className="flex gap-2 max-w-[1352px] mx-auto py-6 overflow-x-auto">
+    <div className="flex gap-3 max-w-[1352px] mx-auto py-6 overflow-x-auto">
       {isPending ? (
         <LoadingIcon className="mx-auto animate-spin text-primary" />
       ) : data && data?.length > 0 ? (
