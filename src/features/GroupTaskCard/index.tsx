@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/libs/utils";
 import Badge from "@/components/Badge";
@@ -47,6 +47,12 @@ const GroupTaskCard = ({
 
   const { todo, setTodo } = useTodo();
 
+  const sortedData = useMemo(() => {
+    return data?.sort(
+      (a, b) => Number(new Date(b.updated_at)) - Number(new Date(a.updated_at))
+    );
+  }, [data]);
+
   return (
     <div
       className={cn(
@@ -66,8 +72,8 @@ const GroupTaskCard = ({
 
       {isFetching ? (
         <LoadingIcon className="animate-spin text-primary mx-auto" />
-      ) : data && data?.length > 0 ? (
-        data?.map((item) => (
+      ) : sortedData && sortedData?.length > 0 ? (
+        sortedData?.map((item) => (
           <TaskCard
             key={item.id}
             todoItemId={item.id}
