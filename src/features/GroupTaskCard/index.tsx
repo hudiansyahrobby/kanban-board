@@ -7,6 +7,7 @@ import TaskDialog from "../Dialogs/TaskDialog";
 import { useListTodoItems } from "@/services/todos";
 import { LoadingIcon } from "@/components/Icons";
 import { useTodo } from "@/contexts/TodoContext";
+import { useDroppable } from "@dnd-kit/core";
 
 const groupTaskCardVariants = cva("p-4 border rounded-[4px]", {
   variants: {
@@ -38,6 +39,10 @@ const GroupTaskCard = ({
   todoId,
   ...props
 }: GroupTaskCardProps) => {
+  const { isOver, setNodeRef } = useDroppable({
+    id: todoId,
+  });
+
   const { data, isFetching } = useListTodoItems(todoId);
 
   const { todo, setTodo } = useTodo();
@@ -46,9 +51,11 @@ const GroupTaskCard = ({
     <div
       className={cn(
         groupTaskCardVariants({ variant }),
-        "flex flex-col gap-3 items-start w-[332px] shrink-0 grow-0",
+        "flex flex-col gap-3 items-start w-[326px] shrink-0 grow-0 h-fit",
+        isOver ? "bg-white" : "",
         className
       )}
+      ref={setNodeRef}
       {...props}
     >
       <Badge variant={variant}>{title}</Badge>

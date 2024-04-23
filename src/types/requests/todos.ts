@@ -12,4 +12,6 @@ export type TUpdateTodoItemReq = {
   target_todo_id: number;
   name?: string;
   progress_percentage?: number;
+  todoId: number;
+  todoItemId: number;
 };

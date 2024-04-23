@@ -42,9 +42,9 @@ export const useCreateTodoItem = (todoId: number) => {
   });
 };
 
-export const useUpdateTodoItem = (todoId: number, todoItemId: number) => {
+export const useUpdateTodoItem = () => {
   return useMutation({
-    mutationFn: (todoItem: TUpdateTodoItemReq) => {
+    mutationFn: ({ todoId, todoItemId, ...todoItem }: TUpdateTodoItemReq) => {
       return API.patch<TTodo>(
         `${ENDPOINT.TODOS}/${todoId}/items/${todoItemId}`,
         todoItem

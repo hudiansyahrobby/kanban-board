@@ -1,8 +1,9 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import ProgressBar from "@/components/ProgressBar";
 import SettingSurveyDialogMenu from "@/features/GroupTaskCard/components/SettingSurveyDialogMenu";
 import { cn } from "@/libs/utils";
 import { useTodo } from "@/contexts/TodoContext";
+import { useDraggable } from "@dnd-kit/core";
 
 interface TaskCardProps {
   title?: string;
@@ -21,14 +22,31 @@ const TaskCard: React.FC<TaskCardProps> = ({
   todoItemId,
   todoId,
 }) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: `${todoId}-${todoItemId}`,
+    });
+
+  const style = transform
+    ? ({
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      } as CSSProperties)
+    : undefined;
+
   const { setTodo } = useTodo();
+
   return (
     <div
       className={cn(
-        "border border-black-100 rounded-[4px] bg-black-400 w-[298px]",
+        "border border-black-100 rounded-[4px] bg-black-400 w-[298px] relative",
+        isDragging ? "z-50" : "z-10",
         isEmpty ? "py-2 px-4" : "p-4",
         className
       )}
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
     >
       {isEmpty ? (
         <h2 className="text-sm leading-6 text-black-500">No Task</h2>

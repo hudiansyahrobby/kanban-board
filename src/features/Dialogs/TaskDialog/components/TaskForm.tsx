@@ -56,7 +56,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ isEdit, onSuccess }) => {
     useCreateTodoItem(todoId!);
 
   const { mutate: updateTodoItem, isPending: isUpdateTodoItemLoading } =
-    useUpdateTodoItem(todoId!, todoItemId!);
+    useUpdateTodoItem();
 
   const onSubmit = handleSubmit(({ name, progress_percentage }) => {
     if (isEdit) {
@@ -65,6 +65,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ isEdit, onSuccess }) => {
           name,
           progress_percentage: Number(progress_percentage.replace("%", "")),
           target_todo_id: todoId!,
+          todoId: todoId!,
+          todoItemId: todoItemId!,
         },
         {
           onSuccess: () => {

@@ -18,7 +18,7 @@ const SurveyDialogMenu = () => {
 
   const { data } = useListTodos();
 
-  const { mutate } = useUpdateTodoItem(todoId!, todoItemId!);
+  const { mutate } = useUpdateTodoItem();
 
   const targetTodoIds = useMemo(() => {
     if (data) {
@@ -43,6 +43,8 @@ const SurveyDialogMenu = () => {
     mutate(
       {
         target_todo_id: targetTodoId,
+        todoId: todoId!,
+        todoItemId: todoItemId!,
       },
       {
         onSuccess: () => {
