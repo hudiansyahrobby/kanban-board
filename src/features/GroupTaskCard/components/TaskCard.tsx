@@ -35,6 +35,15 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   const { setTodo } = useTodo();
 
+  const dragProps = isEmpty
+    ? {}
+    : {
+        ref: setNodeRef,
+        style,
+        ...listeners,
+        ...attributes,
+      };
+
   return (
     <div
       className={cn(
@@ -43,10 +52,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         isEmpty ? "py-2 px-4" : "p-4",
         className
       )}
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
+      {...dragProps}
     >
       {isEmpty ? (
         <h2 className="text-sm leading-6 text-black-500">No Task</h2>
